@@ -15,6 +15,17 @@ const FiatLoadingBubble = styled(LoadingBubble)`
   height: 1rem;
 `
 
+const StyledFiatValue = styled.p`
+  color: ${({ theme }) => theme.textSecondary};
+  font-family: Inter;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  text-transform: uppercase;
+  margin-left: 4px;
+`
+
 export function FiatValue({
   fiatValue,
   priceImpact,
@@ -43,10 +54,12 @@ export function FiatValue({
     <Row gap="sm">
       <ThemedText.BodySmall color="neutral2" data-testid={testId}>
         {fiatValue.data ? (
-          formatNumber({
-            input: fiatValue.data,
-            type: NumberType.FiatTokenPrice,
-          })
+          <StyledFiatValue>
+            {formatNumber({
+              input: fiatValue.data,
+              type: NumberType.FiatTokenPrice,
+            })}
+          </StyledFiatValue>
         ) : (
           <MouseoverTooltip text={<Trans>Not enough liquidity to show accurate USD value.</Trans>}>-</MouseoverTooltip>
         )}

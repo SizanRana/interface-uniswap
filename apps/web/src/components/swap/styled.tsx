@@ -7,8 +7,9 @@ import { Z_INDEX } from 'theme/zIndex'
 import { AutoColumn } from '../Column'
 
 export const PageWrapper = styled.div`
-  padding: 68px 8px 0px;
-  max-width: 480px;
+  padding: 68px 48px 0px;
+  display: flex;
+  justify-content: end;
   width: 100%;
 
   @media only screen and (max-width: ${({ theme }) => `${theme.breakpoint.md}px`}) {
@@ -24,9 +25,8 @@ export const PageWrapper = styled.div`
 const SwapWrapperOuter = styled.main<{ isDark?: boolean }>`
   position: relative;
   z-index: ${Z_INDEX.default};
-  border: 1px solid ${({ theme }) => theme.surface3};
   transition: transform 250ms ease;
-  border-radius: 24px;
+  width: 448px;
 
   &:before {
     content: ' ';
@@ -35,12 +35,7 @@ const SwapWrapperOuter = styled.main<{ isDark?: boolean }>`
     inset: 0;
     transform: scale(1.1);
     filter: blur(50px);
-    background-color: rgba(252, 114, 255, 0.075);
     z-index: -2;
-  }
-
-  &:hover {
-    border: 1px solid ${({ theme }) => theme.surface3};
   }
 `
 
@@ -156,7 +151,7 @@ export const SwapShowAcceptChanges = styled(AutoColumn)`
 `
 
 export const SwapSection = styled.div`
-  background-color: ${({ theme }) => theme.surface2};
+  background-color: ${({ theme }) => theme.cardBlack};
   border-radius: 16px;
   color: ${({ theme }) => theme.neutral2};
   font-size: 14px;

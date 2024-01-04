@@ -63,30 +63,30 @@ const CurrencySelect = styled(ButtonGray)<{
   animateShake?: boolean
 }>`
   align-items: center;
-  background-color: ${({ selected, theme }) => (selected ? theme.surface1 : theme.accent1)};
-  opacity: ${({ disabled }) => (!disabled ? 1 : 0.4)};
-  color: ${({ selected, theme }) => (selected ? theme.neutral1 : theme.white)};
+  /* background-color: ${({ selected, theme }) => (selected ? theme.surface1 : theme.accent1)}; */
+  /* opacity: ${({ disabled }) => (!disabled ? 1 : 0.4)}; */
+  /* color: ${({ selected, theme }) => (selected ? theme.neutral1 : theme.white)}; */
   cursor: pointer;
-  height: 36px;
-  border-radius: 18px;
+  /* height: 36px; */
+  /* border-radius: 18px; */
   outline: none;
   user-select: none;
-  border: 1px solid ${({ selected, theme }) => (selected ? theme.surface3 : theme.accent1)};
+  /* border: 1px solid ${({ selected, theme }) => (selected ? theme.surface3 : theme.accent1)}; */
   font-size: 24px;
   font-weight: 485;
-  width: ${({ hideInput }) => (hideInput ? '100%' : 'initial')};
-  padding: ${({ selected }) => (selected ? '4px 8px 4px 4px' : '6px 6px 6px 8px')};
+  /* width: ${({ hideInput }) => (hideInput ? '100%' : 'initial')}; */
+  /* padding: ${({ selected }) => (selected ? '4px 8px 4px 4px' : '6px 6px 6px 8px')}; */
   gap: 8px;
   justify-content: space-between;
-  margin-left: ${({ hideInput }) => (hideInput ? '0' : '12px')};
-  box-shadow: ${({ theme }) => theme.deprecated_shallowShadow};
+  /* margin-left: ${({ hideInput }) => (hideInput ? '0' : '12px')}; */
+  /* box-shadow: ${({ theme }) => theme.deprecated_shallowShadow}; */
 
-  &:hover,
+  /* &:hover,
   &:active {
     background-color: ${({ theme, selected }) => (selected ? theme.surface2 : theme.accent1)};
-  }
+  } */
 
-  &:before {
+  /* &:before {
     background-size: 100%;
     border-radius: inherit;
 
@@ -97,15 +97,15 @@ const CurrencySelect = styled(ButtonGray)<{
     width: 100%;
     height: 100%;
     content: '';
-  }
+  } */
 
-  &:hover:before {
+  /* &:hover:before {
     background-color: ${({ theme }) => theme.deprecated_stateOverlayHover};
   }
 
   &:active:before {
     background-color: ${({ theme }) => theme.deprecated_stateOverlayPressed};
-  }
+  } */
 
   visibility: ${({ visible }) => (visible ? 'visible' : 'hidden')};
 
@@ -205,6 +205,32 @@ const StyledBalanceMax = styled.button<{ disabled?: boolean }>`
   :focus {
     outline: none;
   }
+`
+
+const StyledBalanceContainer = styled.div`
+  display: flex;
+  align-items: center;
+`
+
+const StyledBalanceTitle = styled.label`
+  color: ${({ theme }) => theme.textSecondary};
+  font-family: Inter;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  text-transform: uppercase;
+`
+
+const StyledBalanceAmount = styled.p`
+  color: ${({ theme }) => theme.green};
+  font-family: Inter;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  text-transform: uppercase;
+  margin-left: 4px;
 `
 
 const StyledNumericalInput = styled(NumericalInput)<{ $loading: boolean }>`
@@ -311,21 +337,8 @@ const SwapCurrencyInputPanel = forwardRef<HTMLInputElement, SwapCurrencyInputPan
         )}
 
         <Container hideInput={hideInput}>
-          <ThemedText.SubHeaderSmall style={{ userSelect: 'none' }}>{label}</ThemedText.SubHeaderSmall>
+          {/* <ThemedText.SubHeaderSmall style={{ userSelect: 'none' }}>{label}</ThemedText.SubHeaderSmall> */}
           <InputRow style={hideInput ? { padding: '0', borderRadius: '8px' } : {}}>
-            {!hideInput && (
-              <div style={{ display: 'flex', flexGrow: 1 }} onClick={handleDisabledNumericalInputClick}>
-                <StyledNumericalInput
-                  className="token-amount-input"
-                  value={value}
-                  onUserInput={onUserInput}
-                  disabled={!chainAllowed || disabled || numericalInputSettings?.disabled}
-                  $loading={loading}
-                  id={id}
-                  ref={ref}
-                />
-              </div>
-            )}
             <PrefetchBalancesWrapper shouldFetchOnAccountUpdate={modalOpen}>
               <Tooltip
                 show={tooltipVisible && !modalOpen}
@@ -377,6 +390,20 @@ const SwapCurrencyInputPanel = forwardRef<HTMLInputElement, SwapCurrencyInputPan
                 </CurrencySelect>
               </Tooltip>
             </PrefetchBalancesWrapper>
+
+            {!hideInput && (
+              <div style={{ display: 'flex', flexGrow: 1 }} onClick={handleDisabledNumericalInputClick}>
+                <StyledNumericalInput
+                  className="token-amount-input"
+                  value={value}
+                  onUserInput={onUserInput}
+                  disabled={!chainAllowed || disabled || numericalInputSettings?.disabled}
+                  $loading={loading}
+                  id={id}
+                  ref={ref}
+                />
+              </div>
+            )}
           </InputRow>
           {Boolean(!hideInput && !hideBalance) && (
             <FiatRow>
@@ -399,13 +426,15 @@ const SwapCurrencyInputPanel = forwardRef<HTMLInputElement, SwapCurrencyInputPan
                         renderBalance ? (
                           renderBalance(selectedCurrencyBalance)
                         ) : (
-                          <Trans>
-                            Balance:{' '}
-                            {formatCurrencyAmount({
-                              amount: selectedCurrencyBalance,
-                              type: NumberType.TokenNonTx,
-                            })}
-                          </Trans>
+                          <StyledBalanceContainer>
+                            <StyledBalanceTitle>Balance: </StyledBalanceTitle>
+                            <StyledBalanceAmount>
+                              {formatCurrencyAmount({
+                                amount: selectedCurrencyBalance,
+                                type: NumberType.TokenNonTx,
+                              })}
+                            </StyledBalanceAmount>
+                          </StyledBalanceContainer>
                         )
                       ) : null}
                     </ThemedText.DeprecatedBody>

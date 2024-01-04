@@ -121,6 +121,11 @@ export const colors = {
   success: '#40B66B',
   critical: '#FF5F52',
   scrim: 'rgba(0, 0, 0, 0.60)',
+
+  // TYCHE
+  textSecondary: '#7C86A0',
+  green: '#00CBA1',
+  cardBlack: '#1B1C1E',
 }
 
 type Theme = typeof darkTheme
@@ -174,6 +179,9 @@ export const darkTheme = {
   success: colors.success,
   critical: colors.critical,
   scrim: colors.scrim,
+  textSecondary: colors.textSecondary,
+  green: colors.green,
+  cardBlack: colors.cardBlack,
 }
 
 export const lightTheme: Theme = {
@@ -197,4 +205,7 @@ export const lightTheme: Theme = {
   success: colors.success,
   critical: colors.critical,
   scrim: colors.scrim,
+  textSecondary: colors.textSecondary,
+  green: colors.green,
+  cardBlack: colors.cardBlack,
 }
