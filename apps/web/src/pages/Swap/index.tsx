@@ -556,6 +556,7 @@ export function Swap({
         onCancel={handleDismissTokenWarning}
         showCancel={true}
       />
+
       {trade && showConfirm && (
         <ConfirmSwapModal
           trade={trade}
@@ -574,6 +575,7 @@ export function Swap({
           fiatValueOutput={fiatValueTradeOutput}
         />
       )}
+
       {showPriceImpactModal && showPriceImpactWarning && (
         <PriceImpactModal
           priceImpact={largerPriceImpact}
@@ -586,7 +588,7 @@ export function Swap({
       )}
 
       <div style={{ display: 'relative' }}>
-        <SwapSection>
+        <SwapSection displayPercentage={true}>
           <Trace section={InterfaceSectionName.CURRENCY_INPUT_PANEL}>
             <SwapCurrencyInputPanel
               label={<Trans>You pay</Trans>}
@@ -603,9 +605,11 @@ export function Swap({
               id={InterfaceSectionName.CURRENCY_INPUT_PANEL}
               loading={independentField === Field.OUTPUT && routeIsSyncing}
               ref={inputCurrencyNumericalInputRef}
+              displayPercentage
             />
           </Trace>
         </SwapSection>
+
         <ArrowWrapper clickable={isSupportedChain(chainId)}>
           <TraceEvent
             events={[BrowserEvent.onClick]}
@@ -626,7 +630,8 @@ export function Swap({
           </TraceEvent>
         </ArrowWrapper>
       </div>
-      <AutoColumn gap="xs">
+
+      <AutoColumn style={{ marginTop: '16px' }} gap="xs">
         <div>
           <OutputSwapSection>
             <Trace section={InterfaceSectionName.CURRENCY_OUTPUT_PANEL}>
@@ -673,16 +678,25 @@ export function Swap({
             ) : null}
           </OutputSwapSection>
         </div>
+
         {showDetailsDropdown && (
-          <SwapDetailsDropdown
-            trade={trade}
-            syncing={routeIsSyncing}
-            loading={routeIsLoading}
-            allowedSlippage={allowedSlippage}
-          />
+          <div style={{ marginTop: '16px' }}>
+            <SwapDetailsDropdown
+              trade={trade}
+              syncing={routeIsSyncing}
+              loading={routeIsLoading}
+              allowedSlippage={allowedSlippage}
+            />
+          </div>
         )}
-        {showPriceImpactWarning && <PriceImpactWarning priceImpact={largerPriceImpact} />}
-        <div>
+
+        {showPriceImpactWarning && (
+          <div style={{ marginTop: '16px' }}>
+            <PriceImpactWarning priceImpact={largerPriceImpact} />
+          </div>
+        )}
+
+        <div style={{ marginTop: '16px' }}>
           {swapIsUnsupported ? (
             <ButtonPrimary $borderRadius="16px" disabled={true}>
               <ThemedText.DeprecatedMain mb="4px">

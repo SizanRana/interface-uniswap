@@ -68,7 +68,7 @@ export const BaseButton = styled(RebassButton)<BaseButtonProps>`
 `
 
 export const ButtonPrimary = styled(BaseButton)`
-  background-color: ${({ theme }) => theme.accent1};
+  background-color: ${({ theme }) => theme.primary};
   font-size: 20px;
   font-weight: 535;
   padding: 16px;

@@ -150,13 +150,13 @@ export const SwapShowAcceptChanges = styled(AutoColumn)`
   margin-top: 8px;
 `
 
-export const SwapSection = styled.div`
+export const SwapSection = styled.div<{ displayPercentage?: boolean }>`
   background-color: ${({ theme }) => theme.cardBlack};
   border-radius: 16px;
   color: ${({ theme }) => theme.neutral2};
   font-size: 14px;
   font-weight: 500;
-  height: 120px;
+  height: ${({ displayPercentage }) => (displayPercentage ? '165px' : '120px')};
   line-height: 20px;
   padding: 16px;
   position: relative;

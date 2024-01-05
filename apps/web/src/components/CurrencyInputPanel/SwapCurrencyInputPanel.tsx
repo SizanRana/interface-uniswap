@@ -235,10 +235,33 @@ const StyledBalanceAmount = styled.p`
 
 const StyledNumericalInput = styled(NumericalInput)<{ $loading: boolean }>`
   ${loadingOpacityMixin};
-  text-align: left;
+  text-align: right;
   font-size: 36px;
   font-weight: 485;
   max-height: 44px;
+  margin-left: 10px;
+`
+
+const StyledPercentageContainer = styled.div`
+  margin-top: 15px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`
+
+const StyledPercentageButton = styled.button`
+  background-color: ${({ theme }) => theme.secondaryCardColor};
+  padding: 6px 8px 6px 8px;
+  border: none;
+  width: 94px;
+  border-radius: 8px;
+  font-family: Inter;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+  color: ${({ theme }) => theme.textSecondary};
+  cursor: pointer;
 `
 
 interface SwapCurrencyInputPanelProps {
@@ -268,6 +291,7 @@ interface SwapCurrencyInputPanelProps {
     onDisabledClick?: () => void
     disabledTooltipBody?: ReactNode
   }
+  displayPercentage?: boolean
 }
 
 const SwapCurrencyInputPanel = forwardRef<HTMLInputElement, SwapCurrencyInputPanelProps>(
@@ -295,6 +319,7 @@ const SwapCurrencyInputPanel = forwardRef<HTMLInputElement, SwapCurrencyInputPan
       disabled = false,
       numericalInputSettings,
       label,
+      displayPercentage = false,
       ...rest
     },
     ref
@@ -405,14 +430,17 @@ const SwapCurrencyInputPanel = forwardRef<HTMLInputElement, SwapCurrencyInputPan
               </div>
             )}
           </InputRow>
+
+          {/* <FiatRowContainer> */}
           {Boolean(!hideInput && !hideBalance) && (
             <FiatRow>
               <RowBetween>
-                <LoadingOpacityContainer $loading={loading}>
+                <LoadingOpacityContainer style={{ height: '16px' }} $loading={loading}>
                   {fiatValue && (
                     <FiatValue fiatValue={fiatValue} priceImpact={priceImpact} testId={`fiat-value-${id}`} />
                   )}
                 </LoadingOpacityContainer>
+
                 {account ? (
                   <RowFixed style={{ height: '16px' }}>
                     <ThemedText.DeprecatedBody
@@ -455,6 +483,16 @@ const SwapCurrencyInputPanel = forwardRef<HTMLInputElement, SwapCurrencyInputPan
                 )}
               </RowBetween>
             </FiatRow>
+          )}
+          {/* </FiatRowContainer> */}
+
+          {displayPercentage && (
+            <StyledPercentageContainer>
+              <StyledPercentageButton>25%</StyledPercentageButton>
+              <StyledPercentageButton>50%</StyledPercentageButton>
+              <StyledPercentageButton>75%</StyledPercentageButton>
+              <StyledPercentageButton>100%</StyledPercentageButton>
+            </StyledPercentageContainer>
           )}
         </Container>
         {onCurrencySelect && (

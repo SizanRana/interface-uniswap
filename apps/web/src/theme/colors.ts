@@ -126,6 +126,8 @@ export const colors = {
   textSecondary: '#7C86A0',
   green: '#00CBA1',
   cardBlack: '#1B1C1E',
+  secondaryCardColor: '#242628;',
+  primary: '#944DFF',
 }
 
 type Theme = typeof darkTheme
@@ -182,6 +184,8 @@ export const darkTheme = {
   textSecondary: colors.textSecondary,
   green: colors.green,
   cardBlack: colors.cardBlack,
+  secondaryCardColor: colors.secondaryCardColor,
+  primary: colors.primary,
 }
 
 export const lightTheme: Theme = {
@@ -208,4 +212,6 @@ export const lightTheme: Theme = {
   textSecondary: colors.textSecondary,
   green: colors.green,
   cardBlack: colors.cardBlack,
+  secondaryCardColor: colors.secondaryCardColor,
+  primary: colors.primary,
 }

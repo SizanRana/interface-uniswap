@@ -19,11 +19,9 @@ const StyledFiatValue = styled.p`
   color: ${({ theme }) => theme.textSecondary};
   font-family: Inter;
   font-size: 14px;
+  line-height: 0%;
   font-style: normal;
   font-weight: 500;
-  line-height: normal;
-  text-transform: uppercase;
-  margin-left: 4px;
 `
 
 export function FiatValue({
@@ -64,6 +62,7 @@ export function FiatValue({
           <MouseoverTooltip text={<Trans>Not enough liquidity to show accurate USD value.</Trans>}>-</MouseoverTooltip>
         )}
       </ThemedText.BodySmall>
+
       {priceImpact && (
         <ThemedText.BodySmall color={priceImpactColor}>
           <MouseoverTooltip
