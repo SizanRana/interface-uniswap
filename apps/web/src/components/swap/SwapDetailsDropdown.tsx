@@ -1,6 +1,10 @@
 import { Trans } from '@lingui/macro'
-import { BrowserEvent, InterfaceElementName, SwapEventName } from '@uniswap/analytics-events'
-import { Percent } from '@uniswap/sdk-core'
+import {
+  BrowserEvent,
+  InterfaceElementName,
+  SwapEventName
+} from '@uniswap/analytics-events'
+import { Currency, Percent } from '@uniswap/sdk-core'
 import { TraceEvent, useTrace } from 'analytics'
 import AnimatedDropdown from 'components/AnimatedDropdown'
 import Column from 'components/Column'
@@ -19,7 +23,10 @@ import GasEstimateTooltip from './GasEstimateTooltip'
 import SwapLineItem, { SwapLineItemType } from './SwapLineItem'
 import TradePrice from './TradePrice'
 
-const StyledHeaderRow = styled(RowBetween)<{ disabled: boolean; open: boolean }>`
+const StyledHeaderRow = styled(RowBetween)<{
+  disabled: boolean
+  open: boolean
+}>`
   padding: 0;
   align-items: center;
   cursor: ${({ disabled }) => (disabled ? 'initial' : 'pointer')};
@@ -38,6 +45,7 @@ const Wrapper = styled(Column)`
   border: 1px solid ${({ theme }) => theme.surface3};
   border-radius: 16px;
   padding: 12px 16px;
+  background-color: ${({ theme }) => theme.cardBlack};
 `
 
 interface SwapDetailsProps {
@@ -45,10 +53,13 @@ interface SwapDetailsProps {
   syncing: boolean
   loading: boolean
   allowedSlippage: Percent
+  fromCurrency?: Currency | null
+  toCurrency?: Currency | null
 }
 
 export default function SwapDetailsDropdown(props: SwapDetailsProps) {
-  const { trade, syncing, loading, allowedSlippage } = props
+  const { trade, syncing, loading, allowedSlippage, fromCurrency, toCurrency } =
+    props
   const theme = useTheme()
   const [showDetails, setShowDetails] = useState(false)
   const trace = useTrace()
@@ -60,8 +71,10 @@ export default function SwapDetailsDropdown(props: SwapDetailsProps) {
         name={SwapEventName.SWAP_DETAILS_EXPANDED}
         element={InterfaceElementName.SWAP_DETAILS_DROPDOWN}
         properties={{
-          ...(trade ? formatCommonPropertiesForTrade(trade, allowedSlippage) : {}),
-          ...trace,
+          ...(trade
+            ? formatCommonPropertiesForTrade(trade, allowedSlippage)
+            : {}),
+          ...trace
         }}
         shouldLogImpression={!showDetails}
       >
@@ -73,8 +86,15 @@ export default function SwapDetailsDropdown(props: SwapDetailsProps) {
         >
           <RowFixed>
             {trade ? (
-              <LoadingOpacityContainer $loading={syncing} data-testid="trade-price-container">
-                <TradePrice price={trade.executionPrice} />
+              <LoadingOpacityContainer
+                $loading={syncing}
+                data-testid="trade-price-container"
+              >
+                <TradePrice
+                  price={trade.executionPrice}
+                  fromCurrency={fromCurrency}
+                  toCurrency={toCurrency}
+                />
               </LoadingOpacityContainer>
             ) : loading || syncing ? (
               <ThemedText.DeprecatedMain fontSize={14}>
@@ -86,7 +106,10 @@ export default function SwapDetailsDropdown(props: SwapDetailsProps) {
             {!showDetails && isSubmittableTrade(trade) && (
               <GasEstimateTooltip trade={trade} loading={syncing || loading} />
             )}
-            <RotatingArrow stroke={trade ? theme.neutral3 : theme.surface2} open={Boolean(trade && showDetails)} />
+            <RotatingArrow
+              stroke={trade ? theme.neutral3 : theme.surface2}
+              open={Boolean(trade && showDetails)}
+            />
           </RowFixed>
         </StyledHeaderRow>
       </TraceEvent>
@@ -109,8 +132,14 @@ function AdvancedSwapDetails(props: SwapDetailsProps & { open: boolean }) {
         <Separator />
         <SwapLineItem {...lineItemProps} type={SwapLineItemType.PRICE_IMPACT} />
         <SwapLineItem {...lineItemProps} type={SwapLineItemType.MAX_SLIPPAGE} />
-        <SwapLineItem {...lineItemProps} type={SwapLineItemType.INPUT_TOKEN_FEE_ON_TRANSFER} />
-        <SwapLineItem {...lineItemProps} type={SwapLineItemType.OUTPUT_TOKEN_FEE_ON_TRANSFER} />
+        <SwapLineItem
+          {...lineItemProps}
+          type={SwapLineItemType.INPUT_TOKEN_FEE_ON_TRANSFER}
+        />
+        <SwapLineItem
+          {...lineItemProps}
+          type={SwapLineItemType.OUTPUT_TOKEN_FEE_ON_TRANSFER}
+        />
         <SwapLineItem {...lineItemProps} type={SwapLineItemType.SWAP_FEE} />
         <SwapLineItem {...lineItemProps} type={SwapLineItemType.NETWORK_COST} />
         <Separator />

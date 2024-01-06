@@ -7,16 +7,18 @@ import { Z_INDEX } from 'theme/zIndex'
 import { AutoColumn } from '../Column'
 
 export const PageWrapper = styled.div`
-  padding: 68px 48px 0px;
+  padding: 28px 48px 0px 0px;
   display: flex;
   justify-content: end;
   width: 100%;
 
-  @media only screen and (max-width: ${({ theme }) => `${theme.breakpoint.md}px`}) {
+  @media only screen and (max-width: ${({ theme }) =>
+      `${theme.breakpoint.md}px`}) {
     padding-top: 48px;
   }
 
-  @media only screen and (max-width: ${({ theme }) => `${theme.breakpoint.sm}px`}) {
+  @media only screen and (max-width: ${({ theme }) =>
+      `${theme.breakpoint.sm}px`}) {
     padding-top: 20px;
   }
 `
@@ -39,7 +41,9 @@ const SwapWrapperOuter = styled.main<{ isDark?: boolean }>`
   }
 `
 
-export const SwapWrapper = (props: React.ComponentProps<typeof SwapWrapperOuter>) => {
+export const SwapWrapper = (
+  props: React.ComponentProps<typeof SwapWrapperOuter>
+) => {
   return (
     <SwapWrapperOuter {...props}>
       <SwapWrapperInner>{props.children}</SwapWrapperInner>
@@ -52,7 +56,7 @@ const SwapWrapperInner = styled.div`
   background: ${({ theme }) => theme.surface1};
   z-index: -1;
   padding: 8px;
-  padding-top: 12px;
+  padding-top: 0px;
 `
 
 export const ArrowWrapper = styled.div<{ clickable: boolean }>`
