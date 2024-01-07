@@ -3,22 +3,28 @@ import { ReactNode } from 'react'
 import { AlertTriangle } from 'react-feather'
 import styled, { css } from 'styled-components'
 import { Z_INDEX } from 'theme/zIndex'
+import swapBgImage from "assets/images/swapBg.png"
 
 import { AutoColumn } from '../Column'
 
 export const PageWrapper = styled.div`
-  padding: 28px 48px 0px 0px;
+  padding: 28px 48px 28px 0px;
   display: flex;
   justify-content: end;
   width: 100%;
+  background-image: url(${swapBgImage});
+  background-attachment: fixed;
+  background-size: cover;
+  overflow-y: scroll;
+  position: relative;
+  height: calc(100vh - 75px);
 
-  @media only screen and (max-width: ${({ theme }) =>
-      `${theme.breakpoint.md}px`}) {
+
+  @media only screen and (max-width: ${({ theme }) => `${theme.breakpoint.md}px`}) {
     padding-top: 48px;
   }
 
-  @media only screen and (max-width: ${({ theme }) =>
-      `${theme.breakpoint.sm}px`}) {
+  @media only screen and (max-width: ${({ theme }) => `${theme.breakpoint.sm}px`}) {
     padding-top: 20px;
   }
 `
@@ -53,24 +59,25 @@ export const SwapWrapper = (
 
 const SwapWrapperInner = styled.div`
   border-radius: 24px;
-  background: ${({ theme }) => theme.surface1};
+  /* background: ${({ theme }) => theme.surface1}; */
+  background: transparent;
   z-index: -1;
   padding: 8px;
   padding-top: 0px;
 `
 
 export const ArrowWrapper = styled.div<{ clickable: boolean }>`
-  border-radius: 12px;
+  border-radius: 100%;
   height: 40px;
   width: 40px;
   position: relative;
-  margin-top: -18px;
-  margin-bottom: -18px;
+  margin-top: -14px;
+  margin-bottom: -24px;
   margin-left: auto;
   margin-right: auto;
-  background-color: ${({ theme }) => theme.surface2};
+  background-color: ${({ theme }) => theme.secondaryCardColor};
   border: 4px solid;
-  border-color: ${({ theme }) => theme.surface1};
+  border-color: ${({ theme }) => theme.secondaryCardColor};
 
   z-index: 2;
   ${({ clickable }) =>

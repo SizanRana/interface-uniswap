@@ -75,18 +75,18 @@ export const ButtonPrimary = styled(BaseButton)`
   color: ${({ theme }) => theme.white};
   &:focus {
     box-shadow: 0 0 0 1pt ${({ theme }) => darken(0.05, theme.accent1)};
-    background-color: ${({ theme }) => darken(0.05, theme.accent1)};
+    background-color: ${({ theme }) => darken(0.05, theme.primary)};
   }
   &:hover {
-    background-color: ${({ theme }) => darken(0.05, theme.accent1)};
+    background-color: ${({ theme }) => darken(0.05, theme.primary)};
   }
   &:active {
-    box-shadow: 0 0 0 1pt ${({ theme }) => darken(0.1, theme.accent1)};
-    background-color: ${({ theme }) => darken(0.1, theme.accent1)};
+    box-shadow: 0 0 0 1pt ${({ theme }) => darken(0.1, theme.primary)};
+    background-color: ${({ theme }) => darken(0.1, theme.primary)};
   }
   &:disabled {
     background-color: ${({ theme, altDisabledStyle, disabled }) =>
-      altDisabledStyle ? (disabled ? theme.accent1 : theme.surface3) : theme.surface3};
+      altDisabledStyle ? (disabled ? theme.primary : theme.surface3) : theme.surface3};
     color: ${({ altDisabledStyle, disabled, theme }) =>
       altDisabledStyle ? (disabled ? theme.white : theme.neutral2) : theme.neutral2};
     cursor: auto;
@@ -105,21 +105,21 @@ export const SmallButtonPrimary = styled(ButtonPrimary)`
 `
 
 const BaseButtonLight = styled(BaseButton)`
-  background-color: ${({ theme }) => theme.accent2};
+  background-color: ${({ theme }) => theme.primary};
   color: ${({ theme }) => theme.accent1};
   font-size: 20px;
   font-weight: 535;
 
   &:focus {
-    box-shadow: 0 0 0 1pt ${({ theme, disabled }) => !disabled && theme.accent2};
-    background-color: ${({ theme, disabled }) => !disabled && theme.accent2};
+    box-shadow: 0 0 0 1pt ${({ theme, disabled }) => !disabled && theme.primary};
+    background-color: ${({ theme, disabled }) => !disabled && theme.primary};
   }
   &:hover {
-    background-color: ${({ theme, disabled }) => !disabled && theme.accent2};
+    background-color: ${({ theme, disabled }) => !disabled && theme.primary};
   }
   &:active {
-    box-shadow: 0 0 0 1pt ${({ theme, disabled }) => !disabled && theme.accent2};
-    background-color: ${({ theme, disabled }) => !disabled && theme.accent2};
+    box-shadow: 0 0 0 1pt ${({ theme, disabled }) => !disabled && theme.primary};
+    background-color: ${({ theme, disabled }) => !disabled && theme.primary};
   }
 
   :hover {

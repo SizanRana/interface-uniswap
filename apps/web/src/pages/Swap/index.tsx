@@ -88,6 +88,7 @@ import { didUserReject } from 'utils/swapErrorToUserReadableMessage'
 
 import { useIsDarkMode } from '../../theme/components/ThemeToggle'
 import { OutputTaxTooltipBody } from './TaxTooltipBody'
+import SwapIcon from 'components/swap/SwapIcon'
 
 function getIsReviewableQuote(
   trade: InterfaceTrade | undefined,
@@ -236,11 +237,11 @@ export function Swap({
     const prefilledInputChanged =
       previousPrefilledState &&
       previousPrefilledState?.[Field.INPUT]?.currencyId !==
-        prefilledState?.[Field.INPUT]?.currencyId
+      prefilledState?.[Field.INPUT]?.currencyId
     const prefilledOutputChanged =
       previousPrefilledState &&
       previousPrefilledState?.[Field.OUTPUT]?.currencyId !==
-        prefilledState?.[Field.OUTPUT]?.currencyId
+      prefilledState?.[Field.OUTPUT]?.currencyId
     if (chainChanged || prefilledInputChanged || prefilledOutputChanged) {
       dispatch(
         replaceSwapState({
@@ -306,19 +307,19 @@ export function Swap({
     () =>
       showWrap
         ? {
-            [Field.INPUT]: parsedAmount,
-            [Field.OUTPUT]: parsedAmount
-          }
+          [Field.INPUT]: parsedAmount,
+          [Field.OUTPUT]: parsedAmount
+        }
         : {
-            [Field.INPUT]:
-              independentField === Field.INPUT
-                ? parsedAmount
-                : trade?.inputAmount,
-            [Field.OUTPUT]:
-              independentField === Field.OUTPUT
-                ? parsedAmount
-                : trade?.outputAmount
-          },
+          [Field.INPUT]:
+            independentField === Field.INPUT
+              ? parsedAmount
+              : trade?.inputAmount,
+          [Field.OUTPUT]:
+            independentField === Field.OUTPUT
+              ? parsedAmount
+              : trade?.outputAmount
+        },
     [independentField, parsedAmount, showWrap, trade]
   )
 
@@ -338,7 +339,7 @@ export function Swap({
   )
   const fiatValueOutput = useUSDPrice(
     parsedAmounts[Field.OUTPUT] ??
-      getSingleUnitAmount(currencies[Field.OUTPUT]),
+    getSingleUnitAmount(currencies[Field.OUTPUT]),
     currencies[Field.OUTPUT]
   )
 
@@ -359,15 +360,15 @@ export function Swap({
       routeIsSyncing || !isClassicTrade(trade) || showWrap
         ? [undefined, undefined]
         : [
-            computeFiatValuePriceImpact(
-              fiatValueTradeInput.data,
-              fiatValueTradeOutput.data
-            ),
-            computeFiatValuePriceImpact(
-              fiatValueTradeInput.data,
-              preTaxFiatValueTradeOutput.data
-            )
-          ],
+          computeFiatValuePriceImpact(
+            fiatValueTradeInput.data,
+            fiatValueTradeOutput.data
+          ),
+          computeFiatValuePriceImpact(
+            fiatValueTradeInput.data,
+            preTaxFiatValueTradeOutput.data
+          )
+        ],
     [
       fiatValueTradeInput,
       fiatValueTradeOutput,
@@ -435,10 +436,10 @@ export function Swap({
       [dependentField]: showWrap
         ? parsedAmounts[independentField]?.toExact() ?? ''
         : formatCurrencyAmount({
-            amount: parsedAmounts[dependentField],
-            type: NumberType.SwapTradeAmount,
-            placeholder: ''
-          })
+          amount: parsedAmounts[dependentField],
+          type: NumberType.SwapTradeAmount,
+          placeholder: ''
+        })
     }),
     [
       dependentField,
@@ -452,16 +453,16 @@ export function Swap({
 
   const userHasSpecifiedInputOutput = Boolean(
     currencies[Field.INPUT] &&
-      currencies[Field.OUTPUT] &&
-      parsedAmounts[independentField]?.greaterThan(JSBI.BigInt(0))
+    currencies[Field.OUTPUT] &&
+    parsedAmounts[independentField]?.greaterThan(JSBI.BigInt(0))
   )
 
   const maximumAmountIn = useMaxAmountIn(trade, allowedSlippage)
   const allowance = usePermit2Allowance(
     maximumAmountIn ??
-      (parsedAmounts[Field.INPUT]?.currency.isToken
-        ? (parsedAmounts[Field.INPUT] as CurrencyAmount<Token>)
-        : undefined),
+    (parsedAmounts[Field.INPUT]?.currency.isToken
+      ? (parsedAmounts[Field.INPUT] as CurrencyAmount<Token>)
+      : undefined),
     isSupportedChain(chainId) ? UNIVERSAL_ROUTER_ADDRESS(chainId) : undefined,
     trade?.fillType
   )
@@ -472,7 +473,7 @@ export function Swap({
   )
   const showMaxButton = Boolean(
     maxInputAmount?.greaterThan(0) &&
-      !parsedAmounts[Field.INPUT]?.equalTo(maxInputAmount)
+    !parsedAmounts[Field.INPUT]?.equalTo(maxInputAmount)
   )
   const swapFiatValues = useMemo(() => {
     return {
@@ -655,8 +656,8 @@ export function Swap({
 
   const showDetailsDropdown = Boolean(
     !showWrap &&
-      userHasSpecifiedInputOutput &&
-      (trade || routeIsLoading || routeIsSyncing)
+    userHasSpecifiedInputOutput &&
+    (trade || routeIsLoading || routeIsSyncing)
   )
 
   const inputCurrency = currencies[Field.INPUT] ?? undefined
@@ -748,13 +749,14 @@ export function Swap({
               }}
               color={theme.neutral1}
             >
-              <ArrowDown size="16" color={theme.neutral1} />
+              {/* <ArrowDown size="16" color={theme.neutral1} /> */}
+              <SwapIcon />
             </ArrowContainer>
           </TraceEvent>
         </ArrowWrapper>
       </div>
 
-      <AutoColumn style={{ marginTop: '16px' }} gap="xs">
+      <AutoColumn style={{ marginTop: '14px' }} gap="xs">
         <div>
           <OutputSwapSection>
             <Trace section={InterfaceSectionName.CURRENCY_OUTPUT_PANEL}>
@@ -857,13 +859,13 @@ export function Swap({
               }}
               element={InterfaceElementName.CONNECT_WALLET_BUTTON}
             >
-              <ButtonLight
+              <ButtonPrimary
                 onClick={toggleWalletDrawer}
                 fontWeight={535}
                 $borderRadius="16px"
               >
                 <Trans>Connect wallet</Trans>
-              </ButtonLight>
+              </ButtonPrimary>
             </TraceEvent>
           ) : chainId && chainId !== connectedChainId ? (
             <ButtonPrimary
@@ -903,11 +905,11 @@ export function Swap({
             userHasSpecifiedInputOutput &&
             !routeIsLoading &&
             !routeIsSyncing ? (
-            <GrayCard style={{ textAlign: 'center' }}>
+            <ButtonPrimary style={{ textAlign: 'center' }}>
               <ThemedText.DeprecatedMain mb="4px">
                 <Trans>Insufficient liquidity for this trade.</Trans>
               </ThemedText.DeprecatedMain>
-            </GrayCard>
+            </ButtonPrimary>
           ) : (
             <TraceEvent
               events={[BrowserEvent.onClick]}
@@ -922,9 +924,9 @@ export function Swap({
                 }}
                 id="swap-button"
                 data-testid="swap-button"
-                disabled={
-                  !getIsReviewableQuote(trade, tradeState, swapInputError)
-                }
+                // disabled={
+                //   !getIsReviewableQuote(trade, tradeState, swapInputError)
+                // }
                 error={
                   !swapInputError &&
                   priceImpactSeverity > 2 &&
